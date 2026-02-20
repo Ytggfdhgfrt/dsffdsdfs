@@ -1,0 +1,25 @@
+name: Unzip Files
+on: workflow_dispatch  # This allows you to run it manually
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Unzip the file
+        run: |
+          # Replace 'your-file.zip' with your actual ZIP filename
+          unzip Crypto-Wallet-Manager.zip -d ./ 
+          rm your-file.zip
+
+      - name: Commit and Push
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "Unzipped files via automation" || echo "No changes to commit"
+          git push
